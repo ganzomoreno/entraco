@@ -7,10 +7,11 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import {
     LayoutDashboard,
-    Zap,
-    FileText,
-    Gauge,
     User,
+    Map,
+    FileText,
+    BarChart3,
+    Globe,
     LogOut,
     Menu
 } from 'lucide-react'
@@ -26,11 +27,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { signOut } from '@/app/dashboard/actions'
 
 const navItems = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-    { name: 'Le mie Utenze', href: '/dashboard/supplies', icon: Zap },
-    { name: 'Bollette', href: '/dashboard/invoices', icon: FileText },
-    { name: 'Autoletture', href: '/dashboard/readings', icon: Gauge },
-    { name: 'Profilo', href: '/dashboard/profile', icon: User },
+    { name: 'Home', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Anagrafiche', href: '/dashboard/profile', icon: User },
+    { name: 'Dati Catastali', href: '/dashboard/cadastral', icon: Map },
+    { name: 'Fatture', href: '/dashboard/invoices', icon: FileText },
+    { name: 'Consumi', href: '/dashboard/consumption', icon: BarChart3 },
+    { name: 'Sito Web', href: 'https://entraco.it', icon: Globe, external: true },
 ]
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -55,7 +57,11 @@ export function Sidebar({ className, userEmail }: SidebarProps) {
                                 className="w-full justify-start"
                                 asChild
                             >
-                                <Link href={item.href}>
+                                <Link
+                                    href={item.href}
+                                    target={item.external ? "_blank" : undefined}
+                                    rel={item.external ? "noopener noreferrer" : undefined}
+                                >
                                     <item.icon className="mr-2 h-4 w-4" />
                                     {item.name}
                                 </Link>
@@ -113,7 +119,11 @@ export function MobileNav() {
                                 className="w-full justify-start"
                                 asChild
                             >
-                                <Link href={item.href}>
+                                <Link
+                                    href={item.href}
+                                    target={item.external ? "_blank" : undefined}
+                                    rel={item.external ? "noopener noreferrer" : undefined}
+                                >
                                     <item.icon className="mr-2 h-4 w-4" />
                                     {item.name}
                                 </Link>

@@ -1,8 +1,8 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { signOut } from './actions'
+import { KpiCards } from '@/components/dashboard/kpi-cards'
+import { ConsumptionChart } from '@/components/dashboard/consumption-chart'
+import { RecentInvoices } from '@/components/dashboard/recent-invoices'
 
 export default async function DashboardPage() {
     const supabase = await createClient()
@@ -22,39 +22,20 @@ export default async function DashboardPage() {
         .single()
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-8">
-            <div className="max-w-4xl mx-auto space-y-8">
-                <div className="flex justify-between items-center">
-                    <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-                        <p className="text-muted-foreground">Benvenuto, {profile?.first_name || user.email}!</p>
-                    </div>
-                    <form action={signOut}>
-                        <Button variant="outline">Esci</Button>
-                    </form>
+        <div className="flex-1 space-y-4">
+            <div className="flex items-center justify-between space-y-2">
+                <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+                <div className="flex items-center space-x-2">
+                    {/* Eventuali azioni globali, range date picker, download report */}
                 </div>
+            </div>
 
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Stato Utenze</CardTitle>
-                            <CardDescription>Riepilogo delle tue forniture attive.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-2xl font-bold">0</p>
-                            <p className="text-xs text-muted-foreground">Utenze attive</p>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Ultime Fatture</CardTitle>
-                            <CardDescription>Situazione pagamenti.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-2xl font-bold">€ 0,00</p>
-                            <p className="text-xs text-muted-foreground">Da saldare</p>
-                        </CardContent>
-                    </Card>
+            <div className="space-y-4">
+                <KpiCards />
+
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                    <ConsumptionChart />
+                    <RecentInvoices />
                 </div>
             </div>
         </div>
