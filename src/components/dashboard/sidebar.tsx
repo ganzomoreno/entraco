@@ -32,7 +32,6 @@ const navItems = [
     { name: 'Dati Catastali', href: '/dashboard/cadastral', icon: Map },
     { name: 'Fatture', href: '/dashboard/invoices', icon: FileText },
     { name: 'Consumi', href: '/dashboard/consumption', icon: BarChart3 },
-    { name: 'Sito Web', href: 'https://entraco.it', icon: Globe, external: true },
 ]
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
