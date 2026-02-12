@@ -58,8 +58,6 @@ export function Sidebar({ className, userEmail }: SidebarProps) {
                             >
                                 <Link
                                     href={item.href}
-                                    target={item.external ? "_blank" : undefined}
-                                    rel={item.external ? "noopener noreferrer" : undefined}
                                 >
                                     <item.icon className="mr-2 h-4 w-4" />
                                     {item.name}
@@ -120,8 +118,6 @@ export function MobileNav() {
                             >
                                 <Link
                                     href={item.href}
-                                    target={item.external ? "_blank" : undefined}
-                                    rel={item.external ? "noopener noreferrer" : undefined}
                                 >
                                     <item.icon className="mr-2 h-4 w-4" />
                                     {item.name}
