@@ -19,7 +19,7 @@ export async function loginWithOtp(formData: FormData) {
         email,
         options: {
             shouldCreateUser: true,
-            emailRedirectTo: `${getURL()}auth/callback`,
+            emailRedirectTo: `${await getURL()}auth/callback`,
         },
     })
 
@@ -73,7 +73,7 @@ export async function signup(formData: FormData) {
         email,
         password,
         options: {
-            emailRedirectTo: `${getURL()}auth/callback`,
+            emailRedirectTo: `${await getURL()}auth/callback`,
         },
     })
 
