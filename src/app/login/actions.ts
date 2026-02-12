@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-import { createClient } from '@/utils/supabase/server'
+import { createClient, getURL } from '@/utils/supabase/server'
 
 export async function loginWithOtp(formData: FormData) {
     const supabase = await createClient()
@@ -19,7 +19,7 @@ export async function loginWithOtp(formData: FormData) {
         email,
         options: {
             shouldCreateUser: true,
-            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback`,
+            emailRedirectTo: `${getURL()}auth/callback`,
         },
     })
 
@@ -73,7 +73,7 @@ export async function signup(formData: FormData) {
         email,
         password,
         options: {
-            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback`,
+            emailRedirectTo: `${getURL()}auth/callback`,
         },
     })
 
