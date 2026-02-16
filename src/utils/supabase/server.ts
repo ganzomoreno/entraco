@@ -31,34 +31,36 @@ export async function createClient() {
 export const getURL = async () => {
     let url = process.env.NEXT_PUBLIC_SITE_URL ??
         process.env.NEXT_PUBLIC_VERCEL_URL ??
+        process.env.VERCEL_URL ?? // Server-side Vercel URL
         'http://localhost:3000/'
+
+    url = url.includes('http') ? url : `https://${url}`
+    url = url.charAt(url.length - 1) === '/' ? url : `${url}/`
 
     try {
         const headersList = await headers()
-        const origin = headersList.get('origin') || headersList.get('x-forwarded-host') || headersList.get('host')
+        const host = headersList.get('x-forwarded-host') || headersList.get('host')
+        const origin = headersList.get('origin')
 
-        if (origin) {
-            // If we have an origin/host from headers, use it as the source of truth
-            // Check if it already has protocol, otherwise assume https for non-localhost
-            if (origin.startsWith('http')) {
-                url = origin
+        // Prefer origin if available (CORS), otherwise host
+        const effectiveHost = origin || host
+
+        if (effectiveHost) {
+            if (effectiveHost.startsWith('http')) {
+                url = effectiveHost
             } else {
-                // Vercel and most production environments serve over HTTPS
-                const protocol = origin.includes('localhost') ? 'http' : 'https'
-                url = `${protocol}://${origin}`
+                // Determine protocol (localhost usually http, everything else https)
+                const isLocal = effectiveHost.includes('localhost') || effectiveHost.includes('127.0.0.1')
+                const protocol = isLocal ? 'http' : 'https'
+                url = `${protocol}://${effectiveHost}`
             }
         }
     } catch (e) {
-        // Fallback to env vars if headers are not available
-        console.warn('Could not get headers for URL detection', e)
+        console.warn('URL detection failed, falling back to env vars', e)
     }
 
-    // Make sure to include `https://` when not localhost if it's missing (env var fallback case)
-    if (!url.startsWith('http')) {
-        url = `https://${url}`
-    }
-
-    // Make sure to include a trailing `/`.
+    // Ensure trailing slash for consistency
     url = url.charAt(url.length - 1) === '/' ? url : `${url}/`
+
     return url
 }
