@@ -31,7 +31,7 @@ export async function createClient() {
 export const getURL = async () => {
     let url = process.env.NEXT_PUBLIC_SITE_URL ??
         process.env.NEXT_PUBLIC_VERCEL_URL ??
-        process.env.VERCEL_URL ?? // Server-side Vercel URL
+        process.env.VERCEL_URL ??
         'http://localhost:3000/'
 
     url = url.includes('http') ? url : `https://${url}`
@@ -42,6 +42,10 @@ export const getURL = async () => {
         const host = headersList.get('x-forwarded-host') || headersList.get('host')
         const origin = headersList.get('origin')
 
+        console.log('--- DEBUG getURL ---')
+        console.log('Origin:', origin)
+        console.log('Host:', host)
+
         // Prefer origin if available (CORS), otherwise host
         const effectiveHost = origin || host
 
@@ -49,8 +53,8 @@ export const getURL = async () => {
             if (effectiveHost.startsWith('http')) {
                 url = effectiveHost
             } else {
-                // Determine protocol (localhost usually http, everything else https)
-                const isLocal = effectiveHost.includes('localhost') || effectiveHost.includes('127.0.0.1')
+                // Determine protocol
+                const isLocal = effectiveHost.includes('localhost') || effectiveHost.includes('127.0.0.1') || effectiveHost.startsWith('192.168.')
                 const protocol = isLocal ? 'http' : 'https'
                 url = `${protocol}://${effectiveHost}`
             }
@@ -59,8 +63,8 @@ export const getURL = async () => {
         console.warn('URL detection failed, falling back to env vars', e)
     }
 
-    // Ensure trailing slash for consistency
     url = url.charAt(url.length - 1) === '/' ? url : `${url}/`
 
+    console.log('Final URL:', url)
     return url
 }

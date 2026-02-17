@@ -15,11 +15,15 @@ export async function loginWithOtp(formData: FormData) {
         return { error: 'Inserisci un indirizzo email valido.' }
     }
 
+    const redirectUrl = `${await getURL()}auth/callback`
+    console.log('--- LOGIN ACTION DEBUG ---')
+    console.log('Generated Redirect URL:', redirectUrl)
+
     const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
             shouldCreateUser: true,
-            emailRedirectTo: `${await getURL()}auth/callback`,
+            emailRedirectTo: redirectUrl,
         },
     })
 
@@ -69,13 +73,25 @@ export async function signup(formData: FormData) {
         return { error: 'Le password non corrispondono.' }
     }
 
-    const { error } = await supabase.auth.signUp({
+    const redirectUrl = `${await getURL()}auth/callback`
+    console.log('--- SIGNUP ACTION DEBUG ---')
+    console.log('Email:', email)
+    console.log('Redirect URL:', redirectUrl)
+
+    const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-            emailRedirectTo: `${await getURL()}auth/callback`,
+            emailRedirectTo: redirectUrl,
         },
     })
+
+    if (error) {
+        console.error('Signup Error:', error)
+        return { error: error.message }
+    }
+
+    console.log('Signup Success:', data)
 
     if (error) {
         return { error: error.message }
