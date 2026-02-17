@@ -93,9 +93,5 @@ export async function signup(formData: FormData) {
 
     console.log('Signup Success:', data)
 
-    if (error) {
-        return { error: error.message }
-    }
-
     return { success: 'Registrazione completata! Controlla la tua email per confermare l\'account.' }
 }
