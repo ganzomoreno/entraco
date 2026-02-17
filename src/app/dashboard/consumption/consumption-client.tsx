@@ -10,6 +10,7 @@ import { Download, Zap, Flame, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { format } from 'date-fns'
 import { it } from 'date-fns/locale'
+import { AutoReadingDialog } from './auto-reading-dialog'
 
 interface Supply {
     id: string
@@ -132,10 +133,15 @@ export function ConsumptionClient({ supplies }: { supplies: Supply[] }) {
                     </Select>
                 </div>
 
-                <Button variant="outline" onClick={handleDownloadCsv} disabled={!readings.length}>
-                    <Download className="mr-2 h-4 w-4" />
-                    Esporta CSV
-                </Button>
+                <div className="flex gap-2">
+                    {selectedSupply?.service_type === 'gas' && (
+                        <AutoReadingDialog supplyId={selectedSupplyId} />
+                    )}
+                    <Button variant="outline" onClick={handleDownloadCsv} disabled={!readings.length}>
+                        <Download className="mr-2 h-4 w-4" />
+                        Esporta CSV
+                    </Button>
+                </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
@@ -249,6 +255,61 @@ export function ConsumptionClient({ supplies }: { supplies: Supply[] }) {
                     </div>
                 </CardContent>
             </Card>
-        </div>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Storico Letture {year}</CardTitle>
+                    <CardDescription>
+                        Dettaglio delle letture ricevute o stimate per il periodo selezionato.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="rounded-md border">
+                        <table className="w-full text-sm text-left">
+                            <thead className="bg-muted/50 text-muted-foreground">
+                                <tr>
+                                    <th className="p-3 font-medium">Data</th>
+                                    <th className="p-3 font-medium">Valore</th>
+                                    <th className="p-3 font-medium">Tipo</th>
+                                    <th className="p-3 font-medium">Fonte</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {readings.length > 0 ? (
+                                    readings.map((r) => (
+                                        <tr key={r.id} className="border-t hover:bg-muted/50 transition-colors">
+                                            <td className="p-3 font-medium">{format(new Date(r.reading_date), 'dd/MM/yyyy', { locale: it })}</td>
+                                            <td className="p-3">
+                                                {r.value_total} <span className="text-muted-foreground text-xs">{selectedSupply?.service_type === 'electricity' ? 'kWh' : 'Smc'}</span>
+                                            </td>
+                                            <td className="p-3">
+                                                {r.is_estimated ? (
+                                                    <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
+                                                        Stimata
+                                                    </span>
+                                                ) : (
+                                                    <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-green-100 text-green-800 hover:bg-green-200">
+                                                        Reale
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="p-3 opacity-70 capitalize">
+                                                {r.is_estimated ? 'Sistema' : 'Autolettura'}
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={4} className="p-4 text-center text-muted-foreground">
+                                            Nessuna lettura trovata per questo periodo.
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </CardContent>
+            </Card>
+        </div >
     )
 }

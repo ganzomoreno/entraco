@@ -16,7 +16,7 @@ const dataEnergy = [
     { name: "Set", total: 180 },
     { name: "Ott", total: 140 },
     { name: "Nov", total: 160 },
-    { name: "Dic", total: 190 },
+    { name: "Dic", total: 571 },
 ]
 
 const dataGas = [
@@ -71,9 +71,9 @@ export function ConsumptionChart() {
                                 />
                                 <Tooltip
                                     cursor={{ fill: 'transparent' }}
-                                    contentStyle={{ borderRadius: '8px' }}
+                                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                 />
-                                <Bar dataKey="total" fill="#eab308" radius={[4, 4, 0, 0]} />
+                                <Bar dataKey="total" fill="var(--color-primary)" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </TabsContent>
@@ -97,9 +97,9 @@ export function ConsumptionChart() {
                                 />
                                 <Tooltip
                                     cursor={{ fill: 'transparent' }}
-                                    contentStyle={{ borderRadius: '8px' }}
+                                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                 />
-                                <Bar dataKey="total" fill="#f97316" radius={[4, 4, 0, 0]} />
+                                <Bar dataKey="total" fill="var(--color-chart-2)" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </TabsContent>

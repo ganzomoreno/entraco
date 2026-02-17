@@ -35,38 +35,40 @@ DECLARE
     inv_num TEXT;
 BEGIN
     FOR s_rec IN SELECT id, user_id, service_type FROM supplies LOOP
-        -- Generate 6 invoices per supply (bi-monthly)
-        FOR i IN 0..5 LOOP
-            inv_date := (NOW() - ((i * 2 + 1) || ' month')::INTERVAL)::DATE;
-            due_date := (inv_date + '20 days'::INTERVAL)::DATE;
-            
-            -- Random Amount
-            amount := floor(random() * 150 + 40);
-            
-            -- Determine status based on age
-            IF i = 0 THEN 
-                status := 'unpaid'; -- Most recent is unpaid
-            ELSIF i = 1 THEN
-                 IF random() < 0.3 THEN status := 'overdue'; ELSE status := 'paid'; END IF;
-            ELSE
-                status := 'paid';
-            END IF;
+        -- Real Invoice from User (Dec 2025)
+        INSERT INTO invoices (
+            user_id, supply_id, number, issue_date, due_date, amount, status, type, consumption_kwh, period_start, period_end, pdf_url
+        ) VALUES (
+            s_rec.user_id,
+            s_rec.id,
+            '2026/001',             -- Invoice Number
+            '2026-01-10',           -- Issue Date (Approx)
+            '2026-01-26',           -- Due Date (Real)
+            158.40,                 -- Amount (Real)
+            'unpaid',               -- Status (Assumed unpaid or make it paid?) Let's say unpaid for better UI
+            s_rec.service_type,
+            571,                    -- Consumption (Real)
+            '2025-12-01',           -- Period Start
+            '2025-12-31',           -- Period End
+            '/fattura_esempio.pdf'  -- Link to the public file
+        );
 
-            inv_num := extract(year from inv_date) || '/' || lpad((floor(random() * 1000)::text), 4, '0');
-
-            INSERT INTO invoices (
+        -- Add a couple of older random paid invoices for history
+        FOR i IN 1..3 LOOP
+             inv_date := ('2025-12-01'::DATE - (i || ' month')::INTERVAL)::DATE;
+             INSERT INTO invoices (
                 user_id, supply_id, number, issue_date, due_date, amount, status, type, consumption_kwh, period_start, period_end
             ) VALUES (
                 s_rec.user_id,
                 s_rec.id,
-                inv_num,
+                extract(year from inv_date) || '/' || lpad((floor(random() * 1000)::text), 4, '0'),
                 inv_date,
-                due_date,
-                amount,
-                status,
+                (inv_date + '20 days'::INTERVAL)::DATE,
+                floor(random() * 100 + 40),
+                'paid',
                 s_rec.service_type,
                 floor(random() * 200 + 100),
-                (inv_date - '2 month'::INTERVAL)::DATE,
+                (inv_date - '1 month'::INTERVAL)::DATE,
                 inv_date
             );
         END LOOP;

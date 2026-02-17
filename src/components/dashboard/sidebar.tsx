@@ -42,24 +42,29 @@ export function Sidebar({ className, userEmail }: SidebarProps) {
     const pathname = usePathname()
 
     return (
-        <div className={cn("pb-12 h-screen border-r bg-sidebar text-sidebar-foreground", className)}>
+        <div className={cn("pb-12 h-screen border-r bg-white text-gray-900", className)}>
             <div className="space-y-4 py-4">
                 <div className="px-3 py-2">
-                    <div className="mb-2 px-4 flex items-center gap-2 bg-white/95 py-2 rounded-md">
-                        <Image src="/logo.png" alt="Entraco" width={140} height={50} priority className="h-8 w-auto" />
+                    <div className="mb-6 px-4 flex items-center gap-2 py-2">
+                        <Image src="/logo.png" alt="Entraco" width={150} height={55} priority className="h-10 w-auto" />
                     </div>
                     <div className="space-y-1">
                         {navItems.map((item) => (
                             <Button
                                 key={item.href}
                                 variant={pathname === item.href ? 'secondary' : 'ghost'}
-                                className="w-full justify-start"
+                                className={cn(
+                                    "w-full justify-start transition-all duration-200",
+                                    pathname === item.href
+                                        ? "bg-orange-50 text-orange-600 hover:bg-orange-100 font-medium border-r-2 border-orange-500 rounded-none rounded-r-md"
+                                        : "text-gray-600 hover:text-orange-600 hover:bg-orange-50/50"
+                                )}
                                 asChild
                             >
                                 <Link
                                     href={item.href}
                                 >
-                                    <item.icon className="mr-2 h-4 w-4" />
+                                    <item.icon className={cn("mr-2 h-4 w-4", pathname === item.href ? "text-orange-600" : "text-gray-500")} />
                                     {item.name}
                                 </Link>
                             </Button>

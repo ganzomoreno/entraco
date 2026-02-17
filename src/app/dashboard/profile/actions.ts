@@ -26,7 +26,8 @@ export async function updateProfile(formData: FormData) {
 
     const { error } = await supabase
         .from('profiles')
-        .update({
+        .upsert({
+            id: user.id,
             first_name,
             last_name,
             phone,
@@ -34,7 +35,6 @@ export async function updateProfile(formData: FormData) {
             customer_code,
             updated_at: new Date().toISOString(),
         })
-        .eq('id', user.id)
 
     if (error) {
         return { error: error.message }

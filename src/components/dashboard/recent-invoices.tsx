@@ -17,52 +17,12 @@ export function RecentInvoices() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="space-y-8">
-                    <div className="flex items-center">
-                        <div className="h-9 w-9 bg-red-100 text-red-600 rounded-full flex items-center justify-center border border-red-200">
-                            <FileText className="h-5 w-5" />
-                        </div>
-                        <div className="ml-4 space-y-1">
-                            <p className="text-sm font-medium leading-none">Fattura n. 2024/001</p>
-                            <p className="text-xs text-muted-foreground">
-                                Scadenza: 15 Feb 2026 - Luce Casa
-                            </p>
-                        </div>
-                        <div className="ml-auto font-medium text-red-600">€ 124,50</div>
-                        <Button variant="ghost" size="icon" className="ml-2">
-                            <ArrowDownToLine className="h-4 w-4" />
-                        </Button>
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                    <div className="h-12 w-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+                        <FileText className="h-6 w-6 text-gray-400" />
                     </div>
-                    <div className="flex items-center">
-                        <div className="h-9 w-9 bg-green-100 text-green-600 rounded-full flex items-center justify-center border border-green-200">
-                            <FileText className="h-5 w-5" />
-                        </div>
-                        <div className="ml-4 space-y-1">
-                            <p className="text-sm font-medium leading-none">Fattura n. 2023/128</p>
-                            <p className="text-xs text-muted-foreground">
-                                Pagata il 10 Gen 2026 - Gas Cucina
-                            </p>
-                        </div>
-                        <div className="ml-auto font-medium">€ 45,00</div>
-                        <Button variant="ghost" size="icon" className="ml-2">
-                            <ArrowDownToLine className="h-4 w-4" />
-                        </Button>
-                    </div>
-                    <div className="flex items-center">
-                        <div className="h-9 w-9 bg-green-100 text-green-600 rounded-full flex items-center justify-center border border-green-200">
-                            <FileText className="h-5 w-5" />
-                        </div>
-                        <div className="ml-4 space-y-1">
-                            <p className="text-sm font-medium leading-none">Fattura n. 2023/112</p>
-                            <p className="text-xs text-muted-foreground">
-                                Pagata il 12 Dic 2025 - Luce Casa
-                            </p>
-                        </div>
-                        <div className="ml-auto font-medium">€ 132,00</div>
-                        <Button variant="ghost" size="icon" className="ml-2">
-                            <ArrowDownToLine className="h-4 w-4" />
-                        </Button>
-                    </div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Nessuna fattura recente</p>
+                    <p className="text-xs text-muted-foreground mt-1">Le tue fatture appariranno qui.</p>
                 </div>
             </CardContent>
         </Card>
