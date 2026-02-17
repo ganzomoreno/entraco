@@ -86,7 +86,7 @@ export default function LoginPage() {
                         </p>
                     </div>
 
-                    <Tabs defaultValue="password" classname="w-full">
+                    <Tabs defaultValue="password" className="w-full">
                         <TabsList className="grid w-full grid-cols-2 mb-4">
                             <TabsTrigger value="password">Password</TabsTrigger>
                             <TabsTrigger value="otp">Codice Rapido</TabsTrigger>
