@@ -63,7 +63,7 @@ export default function OnboardingPage() {
     const prevStep = () => setStep(s => Math.max(s - 1, 1))
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end flex items-center justify-center p-4">
             <Card className="w-full max-w-lg shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gray-100">
                     <motion.div

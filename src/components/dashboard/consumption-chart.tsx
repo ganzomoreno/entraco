@@ -99,7 +99,7 @@ export function ConsumptionChart() {
                                     cursor={{ fill: 'transparent' }}
                                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                 />
-                                <Bar dataKey="total" fill="var(--color-chart-2)" radius={[4, 4, 0, 0]} />
+                                <Bar dataKey="total" fill="var(--color-destructive)" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     </TabsContent>

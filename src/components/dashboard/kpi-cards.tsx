@@ -7,12 +7,12 @@ export async function KpiCards() {
 
     return (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
+            <Card className="border-l-4 border-primary shadow-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                         Totale Utenze
                     </CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
+                    <Users className="h-4 w-4 text-primary" />
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">{data.suppliesCount}</div>
@@ -21,35 +21,35 @@ export async function KpiCards() {
                     </p>
                 </CardContent>
             </Card>
-            <Card>
+            <Card className="border-l-4 border-primary shadow-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                         Ultimi Consumi
                     </CardTitle>
-                    <Zap className="h-4 w-4 text-muted-foreground" />
+                    <Zap className="h-4 w-4 text-primary" />
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold text-sm">
                         <div className="flex items-center gap-1">
-                            <Zap className="h-3 w-3 text-yellow-500" />
+                            <Zap className="h-3 w-3 text-primary" />
                             {data.elecConsumption} kWh
                         </div>
                         <div className="flex items-center gap-1 mt-1">
-                            <Flame className="h-3 w-3 text-orange-500" />
+                            <Flame className="h-3 w-3 text-destructive" /> {/* Gas is Fire/Destructive color */}
                             {data.gasConsumption} Smc
                         </div>
                     </div>
                 </CardContent>
             </Card>
-            <Card>
+            <Card className="border-l-4 border-primary shadow-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                         Fatture da Pagare
                     </CardTitle>
-                    <FileText className="h-4 w-4 text-muted-foreground" />
+                    <FileText className="h-4 w-4 text-primary" />
                 </CardHeader>
                 <CardContent>
-                    <div className={`text-2xl font-bold ${data.unpaidInvoicesCount > 0 ? 'text-red-500' : ''}`}>
+                    <div className={`text-2xl font-bold ${data.unpaidInvoicesCount > 0 ? 'text-destructive' : ''}`}>
                         {data.unpaidInvoicesCount}
                     </div>
                     <p className="text-xs text-muted-foreground">
@@ -57,12 +57,12 @@ export async function KpiCards() {
                     </p>
                 </CardContent>
             </Card>
-            <Card>
+            <Card className="border-l-4 border-primary shadow-sm">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                         Ultima Bolletta
                     </CardTitle>
-                    <FileText className="h-4 w-4 text-muted-foreground" />
+                    <FileText className="h-4 w-4 text-primary" />
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">€ {data.lastBillAmount.toFixed(2).replace('.', ',')}</div>

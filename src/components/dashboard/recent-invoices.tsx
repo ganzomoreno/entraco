@@ -9,7 +9,7 @@ import { ArrowDownToLine, FileText } from "lucide-react"
 
 export function RecentInvoices() {
     return (
-        <Card className="col-span-3">
+        <Card className="col-span-3 border-l-4 border-primary shadow-sm">
             <CardHeader>
                 <CardTitle>Ultime Fatture</CardTitle>
                 <CardDescription>

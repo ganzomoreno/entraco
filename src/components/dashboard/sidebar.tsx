@@ -56,15 +56,15 @@ export function Sidebar({ className, userEmail }: SidebarProps) {
                                 className={cn(
                                     "w-full justify-start transition-all duration-200",
                                     pathname === item.href
-                                        ? "bg-orange-50 text-orange-600 hover:bg-orange-100 font-medium border-r-2 border-orange-500 rounded-none rounded-r-md"
-                                        : "text-gray-600 hover:text-orange-600 hover:bg-orange-50/50"
+                                        ? "bg-primary/10 text-primary font-medium border-r-4 border-primary rounded-none rounded-r-md"
+                                        : "text-muted-foreground hover:text-primary hover:bg-primary/5"
                                 )}
                                 asChild
                             >
                                 <Link
                                     href={item.href}
                                 >
-                                    <item.icon className={cn("mr-2 h-4 w-4", pathname === item.href ? "text-orange-600" : "text-gray-500")} />
+                                    <item.icon className={cn("mr-2 h-4 w-4", pathname === item.href ? "text-primary" : "text-muted-foreground")} />
                                     {item.name}
                                 </Link>
                             </Button>
@@ -133,7 +133,7 @@ export function MobileNav() {
                         <form action={signOut}>
                             <Button variant="ghost" className="w-full justify-start text-red-500">
                                 <LogOut className="mr-2 h-4 w-4" />
-                                Esci
+                                <span className="ml-2">Esci</span>
                             </Button>
                         </form>
                     </div>
