@@ -20,10 +20,12 @@ export async function GET(request: Request) {
             } else {
                 return NextResponse.redirect(`${origin}${next}`)
             }
+        } else {
+            console.error('Auth check error:', error)
+            return NextResponse.redirect(`${origin}/auth/auth-code-error?error=${encodeURIComponent(error.message)}`)
         }
     }
 
     // return the user to an error page with instructions
-    const errorMessage = code ? 'Invalid code' : 'No code provided'
-    return NextResponse.redirect(`${origin}/auth/auth-code-error?error=${encodeURIComponent(errorMessage)}`)
+    return NextResponse.redirect(`${origin}/auth/auth-code-error?error=No+code+provided`)
 }
